@@ -1,0 +1,6 @@
+type: txt
+help: Bind profile to an interface
+
+syntax:expression: exec "/bin/cli-shell-api exists interfaces tunnel $VAR(@)"; "Interface $VAR(@) does not exist"
+
+allowed: /bin/cli-shell-api listNodes interfaces tunnel 

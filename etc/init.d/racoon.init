@@ -1,0 +1,101 @@
+#! /bin/bash
+
+SETKEY="IPsec policies"
+SETKEY_BIN=/usr/sbin/setkey
+SETKEY_CONF=/etc/racoon/sa.conf
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+NAME=racoon
+DESCRIPTION="IPsec IKE daemon"
+DAEMON=/usr/sbin/racoon
+DAEMON_ARGS="-l /var/log/racoon"
+PIDPATH=/var/run
+PIDFILE=$PIDPATH/$NAME.pid
+
+# Define LSB log_* functions.
+# Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
+. /lib/lsb/init-functions
+
+# Starts the daemon
+do_start() {
+        start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null
+        RETVAL=$?
+        if [ ! $RETVAL -eq 0 ]; then return $RETVAL; fi
+        start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON -- $DAEMON_ARGS
+        return $?
+}
+
+# Stop the daemon
+do_stop()
+{
+        start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE
+        rm -f $PIDFILE
+        return $?
+}
+
+#
+# Function that sends a SIGHUP to the daemon/service
+#
+do_reload() {
+        start-stop-daemon --stop --signal 1 --quiet --pidfile $PIDFILE
+        return $?
+}
+
+do_load_policy() {
+	# Setting up SPD policies is not required.
+	if [ -f $SETKEY_CONF ]; then
+		$SETKEY_BIN $SETKEY_OPTIONS -f $SETKEY_CONF
+	fi
+}
+
+do_status() {
+	start-stop-daemon --status --quiet --pidfile $PIDFILE
+}
+
+case "$1" in
+    start)
+        log_daemon_msg "Starting $DESCRIPTION" 
+	do_load_policy
+        do_start
+        RETVAL=$?
+        log_end_msg $RETVAL	
+	;;
+
+    stop)
+        log_daemon_msg "Stoping $DESCRIPTION" 
+        do_stop
+        RETVAL=$?
+        log_end_msg $RETVAL
+	;;
+
+    restart)
+	log_daemon_msg "Restarting $DESCRIPTION" 
+        do_stop
+	do_load_policy
+        do_start
+        RETVAL=$?
+        log_end_msg $RETVAL
+	;;
+
+    reload)
+	do_load_policy
+	do_status
+	if [ $? != 0 ]; then
+		log_daemon_msg "Starting $DESCRIPTION" 
+        	do_load_policy
+        	do_start
+        	RETVAL=$?
+	else
+        	log_daemon_msg "Reloading $DESCRIPTION"
+        	do_reload
+        	RETVAL=$?
+	fi
+        log_end_msg $RETVAL
+	;;
+
+   status)
+	do_status
+        RETVAL=$?
+        log_end_msg $RETVAL
+   	;;
+esac

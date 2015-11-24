@@ -1,0 +1,10 @@
+Package: vyatta-dmvpn 
+Version: 1.0-1
+Section: base
+Priority: optional
+Architecture: all
+Depends: ipsec-tools (>= 0.8.2-1), opennhrp (>= 0.14.1-1), libc-ares2 (>= 1.9.1-3)
+Maintainer: INVITE Support <support@invitenetworks.com>
+Description: Vyatta DMVPN config and operational commands 
+ Vyatta Operational Commands
+ Vyatta Configuration Commands 

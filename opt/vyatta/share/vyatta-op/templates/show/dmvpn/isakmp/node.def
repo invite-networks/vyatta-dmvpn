@@ -1,0 +1,2 @@
+help: Show DMVPN phase 1 SAs
+run: /usr/sbin/racoonctl show-sa isakmp 

@@ -1,0 +1,7 @@
+type: txt
+help: Choose multicast option
+val_help: nhs; Specfying nhs makes all multicast packets to be repeated to each statically configured next hop
+val_help: dynamic; Dynamic instructs to forward to all peers which we have a direct connection with
+allowed: echo nhs dynamic
+
+syntax:expression: $VAR(@) in "nhs", "dynamic"; "Must be (nhs, dynamic)"

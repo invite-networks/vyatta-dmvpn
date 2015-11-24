@@ -1,0 +1,4 @@
+type: txt
+help: ESP group to bind to the profile
+
+allowed: /bin/cli-shell-api listNodes vpn ipsec esp-group

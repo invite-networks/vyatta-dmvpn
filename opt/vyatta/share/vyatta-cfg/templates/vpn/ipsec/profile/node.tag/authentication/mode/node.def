@@ -1,0 +1,8 @@
+type: txt
+help: IPSec authentication mode
+allowed: echo "pre-shared-secret"
+
+syntax:expression: $VAR(@) in "pre-shared-secret"; "Authentiction mode must be 'pre-shared-secret'"
+
+commit:expression: $VAR(../pre-shared-secret/) != "" ; \
+                "Must define a pre-shared-secret for the IPSec profile $VAR(../../@)"

@@ -1,0 +1,9 @@
+tag:
+type: ipv4net
+val_help: ipv4net; IPv4 address and prefix length
+help: Enter address of NHS
+
+syntax:expression: exec "/opt/vyatta/sbin/valid_address $VAR(@)"
+
+commit:expression: $VAR(./nbma-address/) != "" ;                    \
+                   "Must configure the HUB nbma-address for $VAR(../../@)"

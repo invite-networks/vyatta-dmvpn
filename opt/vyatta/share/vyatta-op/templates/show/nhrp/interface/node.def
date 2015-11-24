@@ -1,0 +1,3 @@
+help: Show nhrp interfaces 
+
+run: sudo /usr/sbin/opennhrpctl interface show

@@ -1,0 +1,4 @@
+type: txt
+help: Enter authentication key 
+val_help: <key>; Authentication key
+

@@ -1,0 +1,8 @@
+/var/log/racoon {
+    rotate 2
+    size 1M
+    nocompress
+    missingok
+    notifempty
+    copytruncate
+}

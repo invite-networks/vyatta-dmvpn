@@ -1,0 +1,10 @@
+tag:
+type: txt
+help: Enable NHRP on a tunnel interface 
+
+syntax:expression: exec "/bin/cli-shell-api exists interfaces tunnel $VAR(@)"; "Interface $VAR(@) does not exist"
+
+allowed: /bin/cli-shell-api listNodes interfaces tunnel
+
+end:
+  sudo /opt/vyatta/sbin/vyatta-update-dmvpn.pl --tun "$VAR(@)";

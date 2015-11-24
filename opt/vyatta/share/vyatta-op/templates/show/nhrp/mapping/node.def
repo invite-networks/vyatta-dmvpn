@@ -1,0 +1,3 @@
+help: Show nhrp mappings
+
+run: sudo /usr/sbin/opennhrpctl show

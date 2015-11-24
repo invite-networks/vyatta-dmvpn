@@ -1,0 +1,2 @@
+help: Show DMVPN phase 2 SAs
+run: /usr/sbin/racoonctl show-sa ipsec 
